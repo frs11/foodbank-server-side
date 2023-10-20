@@ -52,8 +52,8 @@ async function run() {
 
     // Store Product to the the Cart
     app.post("/cart/products", async (req, res) => {
-      const selectedProduct = req.body;
-      const result = await cartProductCollection.insertOne(selectedProduct);
+      const newSelectedProduct = req.body;
+      const result = await cartProductCollection.insertOne(newSelectedProduct);
       console.log(result);
       res.send(result);
     });
@@ -89,7 +89,7 @@ async function run() {
     // Delete product
     app.delete(`/cart/products/:id`, async (req, res) => {
       const id = req.params.id;
-      const query = { _id: id };
+      const query = { _id: new ObjectId(id) };
       const result = await cartProductCollection.deleteOne(query);
       res.send(result);
     });
