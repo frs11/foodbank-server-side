@@ -35,10 +35,25 @@ async function run() {
       res.send(result);
     });
 
+    // Get Cart Product from the database
+    app.get("/cart/products", async (req, res) => {
+      const cursor = cartProductCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    });
+
     // Store Product to the database
     app.post("/brands/products", async (req, res) => {
       const newProduct = req.body;
       const result = await productCollection.insertOne(newProduct);
+      console.log(result);
+      res.send(result);
+    });
+
+    // Store Product to the the Cart
+    app.post("/cart/products", async (req, res) => {
+      const selectedProduct = req.body;
+      const result = await cartProductCollection.insertOne(selectedProduct);
       console.log(result);
       res.send(result);
     });
